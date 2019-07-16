@@ -24,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-12" formArrayName="ingredients">
-                    <div class="row mt-2" *ngFor="let i of recipeForm.get('ingredients').controls; let id = index" [formGroupName]="id">
+                    <div class="row mt-2" *ngFor="let i of ingredientsGet; let id = index" [formGroupName]="id">
                         <div class="col-8">
                             <input type="text" class="form-control" placeholder="Name" formControlName="name">
                         </div>

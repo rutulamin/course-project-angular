@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, Subject, BehaviorSubject } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
     kind: string;
@@ -25,7 +26,7 @@ export class AuthService {
 
   onSigup(e: string, p: string) {
     return this.Http.post<AuthResponseData>
-    ('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyC1x1JAIpvMdtZrLdPxH7bpAm4-YcqlvUU',
+    ('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + environment.firebaseAPIKey,
       {
         email: e,
         password: p,
@@ -33,7 +34,7 @@ export class AuthService {
       }
     ).pipe(
       catchError(this.errorHandle), tap( resData => {
-          this.authHandle(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+          this.authHandle(resData.email, resData.localId, resData.idToken, + resData.expiresIn);
       })
     );
   }
@@ -60,7 +61,7 @@ export class AuthService {
 
   onLogin(e: string, p: string) {
     return this.Http.post<AuthResponseData>
-    ('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyC1x1JAIpvMdtZrLdPxH7bpAm4-YcqlvUU',
+    ('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + environment.firebaseAPIKey,
       {
         email: e,
         password: p,
@@ -68,7 +69,7 @@ export class AuthService {
       }
     ).pipe(
         catchError(this.errorHandle), tap( resData => {
-            this.authHandle(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+            this.authHandle(resData.email, resData.localId, resData.idToken, + resData.expiresIn);
         })
       );
   }

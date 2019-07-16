@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
     this.dsService.saveData();
   }
   onFetchData() {
+  
     this.dsService.fetchData().subscribe();
   }
   onLogout() {
